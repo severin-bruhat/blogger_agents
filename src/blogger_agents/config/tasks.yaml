@@ -48,3 +48,5 @@ quality_review_task:
   expected_output: >
     L'article final prêt à être copié-collé sur le blog (format Markdown).
   agent: quality_reviewer
+  markdown: true
+  output_file: "articles/final_version_{timestamp}.md"

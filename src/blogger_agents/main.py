@@ -11,10 +11,13 @@ def run():
     """
     Run the crew.
     """
+    now = datetime.now().strftime("%Y-%m-%d_%H-%M")
+    
     inputs = {
-        'topic': 'Comment obtenir la nationalité britannique en habitant en Écosse après le Brexit',
+        'topic': 'Comment obtenir la nationalité britannique en habitant en Écosse? Condiderer la procedure et les frais',
         'word_count': '1200',
-        'keyword': 'passeport britannique écosse'
+        'keyword': 'passeport britannique écosse',
+        'timestamp': now
     }
 
     try:

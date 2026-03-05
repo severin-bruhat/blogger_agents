@@ -6,6 +6,7 @@ from typing import List
 smart_llm = LLM(model="gpt-4o")
 fast_llm = LLM(model="gpt-4o-mini")
 
+# Load the personal writing style guide to inject into relevant agents
 with open("knowledge/style_guide.md", "r", encoding="utf-8") as f:
     personal_style_guide = f.read()
 
