@@ -1,11 +1,13 @@
 from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
-from crewai.knowledge.source.pdf_knowledge_source import PDFKnowledgeSource
 from typing import List
 
 smart_llm = LLM(model="gpt-4o")
 fast_llm = LLM(model="gpt-4o-mini")
+
+with open("knowledge/style_guide.md", "r", encoding="utf-8") as f:
+    personal_style_guide = f.read()
 
 @CrewBase
 class BloggerAgents():
@@ -14,11 +16,6 @@ class BloggerAgents():
     agents_config = "config/agents.yaml"
     tasks_config = 'config/tasks.yaml'
 
-    def __init__(self) -> None:
-        # Load your past articles to teach the Researcher your voice
-        self.style_knowledge = PDFKnowledgeSource(
-            file_paths=["style1.pdf", "style2.pdf", "style3.pdf"]
-    )
     
     @agent
     def researcher(self) -> Agent:
@@ -41,7 +38,7 @@ class BloggerAgents():
         return Agent(
             config=self.agents_config['editor'], 
             llm=smart_llm, 
-            knowledge_sources=[self.style_knowledge],
+            backstory=f"{self.agents_config['editor']['backstory']}\n\nSTYLE GUIDE TO FOLLOW:\n{personal_style_guide}",
             verbose=True
         )
 
