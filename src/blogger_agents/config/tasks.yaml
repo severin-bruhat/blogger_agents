@@ -1,17 +1,50 @@
 research_task:
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is {current_year}.
+    Faire des recherches approfondies sur {topic}. 
+    Chercher des sources locales écossaises et des témoignages d'expats.
   expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
+    Un compte-rendu de recherche structuré en FRANÇAIS incluant les points 
+    clés, les liens sources et les conseils pratiques.
   agent: researcher
 
-reporting_task:
+planning_task:
   description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    Créer un plan détaillé pour un article de blog sur {topic}. 
+    L'angle doit être celui d'un blog personnel : utile mais humain.
   expected_output: >
-    A fully fledged report with the main topics, each with a full section of information.
-    Formatted as markdown without '```'
-  agent: reporting_analyst
+    Un plan d'article (H1, H2, H3) en FRANÇAIS avec une brève description 
+    de ce que chaque section doit contenir.
+  agent: planner
+  human_input: true
+
+writing_task:
+  description: >
+    Rédiger l'article complet en FRANÇAIS (environ {word_count} mots). 
+    Utiliser les informations de la recherche et suivre le plan validé.
+  expected_output: >
+    Le brouillon complet de l'article en Markdown.
+  agent: writer
+
+seo_optimization_task:
+  description: >
+    Optimiser le brouillon pour le mot-clé principal : "{keyword}". 
+    Générer un titre SEO captivant et une méta-description en FRANÇAIS.
+  expected_output: >
+    Une version optimisée du texte avec une section dédiée aux métadonnées.
+  agent: seo_optimizer
+
+editing_task:
+  description: >
+    Analyser le style des articles précédents (fournis via les PDF) et 
+    réécrire l'article optimisé pour qu'il reflète la personnalité de l'auteur.
+  expected_output: >
+    L'article finalisé avec le ton, l'humour et le vocabulaire de l'auteur.
+  agent: editor
+
+quality_review_task:
+  description: >
+    Vérifier la précision des informations sur l'Écosse/Royaume-Uni et la 
+    qualité de la langue française. Corriger toute erreur restante.
+  expected_output: >
+    L'article final prêt à être copié-collé sur le blog (format Markdown).
+  agent: quality_reviewer
