@@ -16,7 +16,7 @@ def run():
     inputs = {
         'topic': 'Comment obtenir la nationalité britannique en habitant en Écosse? Condiderer la procedure et les frais',
         'word_count': '1200',
-        'keyword': 'passeport britannique écosse',
+        'keyword': 'passeport britannique écosse nationalité',
         'timestamp': now
     }
 

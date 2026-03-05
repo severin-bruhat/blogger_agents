@@ -2,6 +2,7 @@ from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from typing import List
+from crewai_tools import SerperDevTool
 
 smart_llm = LLM(model="gpt-4o")
 fast_llm = LLM(model="gpt-4o-mini")
@@ -20,7 +21,7 @@ class BloggerAgents():
     
     @agent
     def researcher(self) -> Agent:
-        return Agent(config=self.agents_config['researcher'], llm=fast_llm, verbose=True)
+        return Agent(config=self.agents_config['researcher'], llm=fast_llm, tools=[SerperDevTool()], verbose=True)
 
     @agent
     def planner(self) -> Agent:

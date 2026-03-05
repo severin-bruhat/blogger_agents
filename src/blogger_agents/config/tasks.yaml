@@ -15,12 +15,13 @@ planning_task:
     Un plan d'article (H1, H2, H3) en FRANÇAIS avec une brève description 
     de ce que chaque section doit contenir.
   agent: planner
-  human_input: true
+  # human_input: true
 
 writing_task:
   description: >
     Rédiger l'article complet en FRANÇAIS (environ {word_count} mots). 
     Utiliser les informations de la recherche et suivre le plan validé.
+    Ajouter une liste de sources fiables et pertinentes pour l'article.
   expected_output: >
     Le brouillon complet de l'article en Markdown.
   agent: writer
@@ -46,7 +47,7 @@ quality_review_task:
     Vérifier la précision des informations sur l'Écosse/Royaume-Uni et la 
     qualité de la langue française. Corriger toute erreur restante.
   expected_output: >
-    L'article final prêt à être copié-collé sur le blog (format Markdown).
+    L'article final prêt à être copié-collé sur le blog.
   agent: quality_reviewer
   markdown: true
   output_file: "articles/final_version_{timestamp}.md"
