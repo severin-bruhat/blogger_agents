@@ -1,7 +1,7 @@
 research_task:
   description: >
     Faire des recherches approfondies sur {topic}. 
-    Chercher des sources locales écossaises et des témoignages d'expats.
+    Chercher des sources locales écossaises et des sources officielles telles que des ambassades, consulats, gouvernements, blogs professionnels.
   expected_output: >
     Un compte-rendu de recherche structuré en FRANÇAIS incluant les points 
     clés, les liens sources et les conseils pratiques.
@@ -10,7 +10,7 @@ research_task:
 planning_task:
   description: >
     Créer un plan détaillé pour un article de blog sur {topic}. 
-    L'angle doit être celui d'un blog personnel : utile mais humain.
+    L'angle doit être celui d'un blog personnel : utile mais humain avec un ton amateur.
   expected_output: >
     Un plan d'article (H1, H2, H3) en FRANÇAIS avec une brève description 
     de ce que chaque section doit contenir.
@@ -36,8 +36,10 @@ seo_optimization_task:
 
 editing_task:
   description: >
-    Analyser le style des articles précédents (fournis via les PDF) et 
-    réécrire l'article optimisé pour qu'il reflète la personnalité de l'auteur.
+    Réviser l'article produit par le rédacteur. 
+    Appliquez rigoureusement les règles de mon GUIDE DE STYLE (ton, vocabulaire, structure).
+    Assurez-vous que l'article ne ressemble pas à un texte généré par IA mais à un post 
+    chaleureux d'un expatrié français en Écosse.
   expected_output: >
     L'article finalisé avec le ton, l'humour et le vocabulaire de l'auteur.
   agent: editor

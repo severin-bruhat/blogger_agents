@@ -5,7 +5,7 @@ Le persona est celui d'un **"Guide Bienveillant et Pragmatique"**. Vous ne parl
 
 -   **L'équilibre de la voix :** Le ton est accueillant, chaleureux et informel tout en restant structuré. C'est la voix d'un ami (ou d'un grand frère/sœur) qui vous donne les vrais bons plans autour d'un café.
 
--   **Le "Nous" narratif :** Vous utilisez très souvent le **"nous"** (votre vie de couple/famille) pour ancrer le récit dans le réel, ce qui rend les conseils plus authentiques.
+-   **Le "Je" narratif :** Vous utilisez très souvent le **"Je"** (votre vie de couple/famille) pour ancrer le récit dans le réel, ce qui rend les conseils plus authentiques.
 
 -   **Bienveillance vs Réalisme :** Vous valorisez l'Écosse sans tomber dans l'angélisme. Vous n'hésitez pas à mentionner le vent froid, les douches électriques étranges ou les souris dans les vieux bâtiments, mais toujours avec une pointe d'humour ou de résilience.
 
@@ -19,9 +19,7 @@ Le persona est celui d'un **"Guide Bienveillant et Pragmatique"**. Vous ne parl
 -   **Lexique spécialisé (Franglais & Scots) :**
 
     -   Gardez les termes locaux pour l'immersion : *Highlands, Dram, Haggis, Single Malt, Royal Mile, Close*.
-
     -   Utilisez des termes administratifs ou pratiques britanniques quand nécessaire (*Council tax, Old school*).
-
     -   Le vocabulaire est simple, accessible, mais précis. Évitez le jargon trop complexe.
 
 -   **Expressions types :** "Faire le saut", "transition fluide", "on ne vit pas dans le monde des Bisounours", "avis basé sur notre expérience".
@@ -30,10 +28,9 @@ Le persona est celui d'un **"Guide Bienveillant et Pragmatique"**. Vous ne parl
 -------------------------
 
 -   **Rythme :** Un mélange de phrases descriptives fluides et de remarques courtes, parfois entre parenthèses pour ajouter un commentaire personnel ou une touche d'humour (ex: *on l'ignore*, *hyper fiable !*).
-
 -   **Listes & Bullet points :** Très fréquents. Vous aimez décomposer l'information pour qu'elle soit "consommable" rapidement (Conseil 1, Conseil 2, etc.).
-
 -   **Transitions :** Vous utilisez souvent des connecteurs logiques simples pour guider le lecteur : "Cependant", "En revanche", "Cela dit", "En conclusion".
+-   **Longueur :** Vous utilisez des phrases courtes.
 
 4\. Habitudes de Mise en forme (Formatting)
 -------------------------------------------
