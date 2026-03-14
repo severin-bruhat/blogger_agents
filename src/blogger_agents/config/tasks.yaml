@@ -1,55 +1,176 @@
 research_task:
   description: >
-    Faire des recherches approfondies sur {topic}. 
-    Chercher des sources locales écossaises et des sources officielles telles que des ambassades, consulats, gouvernements, blogs professionnels.
+    Effectuez des recherches approfondies et vérifiées sur le sujet suivant : {topic}.
+
+    Instructions précises :
+    - Cherchez des sources officielles en priorité : gov.uk, mygov.scot, NHS Écosse,
+      HMRC, ambassade de France à Londres, consulat de France à Édimbourg.
+    - Incluez également des blogs d'expatriés francophones reconnus et des forums
+      actifs (The French Group Edinburgh, Français en Écosse, etc.).
+    - Pour chaque information clé, notez l'URL source complète et la date de dernière
+      mise à jour si disponible.
+    - Identifiez les 5 à 8 questions que se posent le plus souvent les francophones
+      sur ce sujet.
+    - Signalez toute information qui semble obsolète ou contradictoire entre les sources.
+    - Rédigez TOUT en FRANÇAIS.
   expected_output: >
-    Un compte-rendu de recherche structuré en FRANÇAIS incluant les points 
-    clés, les liens sources et les conseils pratiques.
+    Un compte-rendu de recherche structuré EN FRANÇAIS contenant :
+    1. Résumé exécutif (5-10 points clés)
+    2. Informations détaillées par sous-thème, chacune avec sa source URL
+    3. Les 5-8 questions fréquentes des francophones sur ce sujet
+    4. Conseils pratiques et pièges à éviter
+    5. Liste des sources avec URL complète et date de consultation
   agent: researcher
 
 planning_task:
   description: >
-    Créer un plan détaillé pour un article de blog sur {topic}. 
-    L'angle doit être celui d'un blog personnel : utile mais humain avec un ton amateur.
+    Sur la base du compte-rendu de recherche fourni, créez un plan d'article de blog
+    détaillé sur {topic}.
+
+    L'article doit avoir l'angle d'un blog personnel francophone : utile, humain,
+    imparfait — pas une brochure administrative.
+
+    Instructions précises :
+    - Proposez un titre principal H1 accrocheur (pas un titre d'encyclopédie).
+    - Structurez en 4 à 6 sections H2 maximum, chacune avec 2-3 sous-sections H3
+      si nécessaire.
+    - Chaque section H2 doit répondre à une des questions fréquentes identifiées
+      par le chercheur.
+    - Prévoyez un emplacement pour au moins une anecdote personnelle ou expérience vécue.
+    - La conclusion doit inclure un appel à l'action ou une invitation au commentaire.
+    - Rédigez TOUT en FRANÇAIS.
   expected_output: >
-    Un plan d'article (H1, H2, H3) en FRANÇAIS avec une brève description 
-    de ce que chaque section doit contenir.
+    Un plan d'article EN FRANÇAIS comprenant :
+    - H1 proposé (avec variante alternative)
+    - Pour chaque H2 : titre + 2-3 phrases décrivant le contenu attendu + indication
+      si une anecdote/astuce pratique est suggérée
+    - Note éditoriale sur le ton à adopter pour cet article spécifiquement
   agent: planner
-  # human_input: true
+  context:
+    - research_task
 
 writing_task:
   description: >
-    Rédiger l'article complet en FRANÇAIS (environ {word_count} mots). 
-    Utiliser les informations de la recherche et suivre le plan validé.
-    Ajouter une liste de sources fiables et pertinentes pour l'article.
+    Rédigez l'article complet EN FRANÇAIS d'environ {word_count} mots sur {topic}.
+
+    POINT DE DÉPART OBLIGATOIRE :
+    Avant d'écrire la moindre phrase, lisez intégralement :
+    (1) le plan produit par le Stratège Éditorial — utilisez son H1, ses H2 et ses H3
+        comme squelette exact de l'article. Ne réorganisez pas, ne renommez pas les sections.
+    (2) le compte-rendu de recherche — toutes les informations factuelles et sources
+        que vous citez DOIVENT provenir de ce document.
+
+    Instructions précises :
+    - Respectez strictement la structure H1/H2/H3 définie dans le plan.
+    - N'inventez aucune information : utilisez exclusivement les faits du compte-rendu de recherche.
+    - Commencez par une accroche personnelle ou une anecdote (2-3 paragraphes)
+      avant d'entrer dans le vif du sujet.
+    - Alternez paragraphes narratifs et éléments pratiques (listes, étapes numérotées).
+    - Citez vos sources naturellement dans le texte ("Selon le site officiel gov.uk...")
+      sans style académique lourd.
+    - Ajoutez en fin d'article une section "Sources et liens utiles" avec les URLs.
+    - Évitez absolument : "Il est important de noter", "En conclusion,",
+      "N'hésitez pas à", les listes à puces sans contexte narratif.
+    - Rédigez TOUT en FRANÇAIS, format Markdown.
   expected_output: >
-    Le brouillon complet de l'article en Markdown.
+    Le brouillon complet de l'article EN FRANÇAIS au format Markdown, incluant :
+    - Titre H1
+    - Corps de l'article structuré selon le plan
+    - Section "Sources et liens utiles" en fin d'article
+    - Estimation du nombre de mots en fin de document
   agent: writer
+  context:
+    - research_task
+    - planning_task
 
 seo_optimization_task:
   description: >
-    Optimiser le brouillon pour le mot-clé principal : "{keyword}". 
-    Générer un titre SEO captivant et une méta-description en FRANÇAIS.
+    Optimisez le brouillon de l'article pour le référencement naturel.
+
+    Mot-clé principal : "{keyword}"
+    Sujet : {topic}
+
+    Instructions précises :
+    - Analysez la densité du mot-clé principal et de ses variantes sémantiques.
+      Objectif : présence naturelle dans le titre, le premier paragraphe, 2-3 H2
+      et la conclusion — sans bourrage.
+    - Proposez un titre SEO H1 optimisé (55-60 caractères idéalement).
+    - Rédigez une méta-description EN FRANÇAIS (150-160 caractères) incluant
+      le mot-clé et un verbe d'action.
+    - Suggérez 5 mots-clés secondaires / longue traîne à intégrer naturellement.
+    - Identifiez les H2/H3 qui pourraient bénéficier d'une reformulation SEO.
+    - Proposez le texte modifié intégrant vos optimisations.
+    - Tout le contenu reste EN FRANÇAIS, naturel et lisible.
   expected_output: >
-    Une version optimisée du texte avec une section dédiée aux métadonnées.
+    Version optimisée de l'article EN FRANÇAIS au format Markdown, avec en tête
+    de document une section "Métadonnées SEO" contenant :
+    - Titre SEO proposé
+    - Méta-description (150-160 caractères)
+    - Mots-clés secondaires retenus
+    - Note sur les modifications apportées
   agent: seo_optimizer
+  context:
+    - writing_task
 
 editing_task:
   description: >
-    Réviser l'article produit par le rédacteur. 
-    Appliquez rigoureusement les règles de mon GUIDE DE STYLE (ton, vocabulaire, structure).
-    Assurez-vous que l'article ne ressemble pas à un texte généré par IA mais à un post 
-    chaleureux d'un expatrié français en Écosse.
+    Révisez l'article optimisé pour qu'il sonne authentiquement humain et corresponde
+    à la voix du blog : un·e expatrié·e français·e en Écosse, chaleureux·se, direct·e,
+    parfois autodérisoire.
+
+    Instructions précises :
+    - Traque et remplace toutes les tournures typiquement "IA" :
+      * Listes à puces orphelines sans intro narrative
+      * Transitions mécaniques ("En conclusion,", "Par ailleurs,", "Il convient de")
+      * Adjectifs pompeux et superlatifs vides
+      * Phrases trop longues et subordonnées imbriquées
+    - Renforce la personnalité de l'auteur :
+      * Ajoutez une touche d'humour là où c'est naturel
+      * Gardez quelques phrases courtes percutantes pour le rythme
+      * Assurez-vous que l'accroche est vraiment accrocheuse
+    - Vérifiez la cohérence du ton du début à la fin.
+    - Ne changez PAS le fond, les faits, ni les sources.
+    - Travaillez UNIQUEMENT en FRANÇAIS.
   expected_output: >
-    L'article finalisé avec le ton, l'humour et le vocabulaire de l'auteur.
+    L'article révisé EN FRANÇAIS au format Markdown, avec en commentaire Markdown
+    (<!-- -->) une note listant les 3-5 principaux changements stylistiques effectués.
   agent: editor
+  context:
+    - seo_optimization_task
 
 quality_review_task:
   description: >
-    Vérifier la précision des informations sur l'Écosse/Royaume-Uni et la 
-    qualité de la langue française. Corriger toute erreur restante.
+    Effectuez la vérification finale de l'article avant publication.
+
+    Trois axes de contrôle obligatoires :
+
+    1. EXACTITUDE FACTUELLE
+       - Vérifiez chaque chiffre cité (prix, délais, dates, statistiques).
+       - Vérifiez les noms propres : lieux (Édimbourg, pas Edimbourg), institutions,
+         lois (UK GDPR, Settled Status, etc.).
+       - Signalez toute information potentiellement obsolète avec [À VÉRIFIER + raison].
+
+    2. SOURCES
+       - Vérifiez que chaque fait majeur est sourcé.
+       - Identifiez les affirmations sans source et marquez-les [SOURCE MANQUANTE].
+
+    3. QUALITÉ DU FRANÇAIS
+       - Orthographe, grammaire, conjugaison, accords.
+       - Typographie française : guillemets «», espaces insécables (: ; ! ?),
+         majuscules accentuées (É, À, Ê).
+       - Ponctuation cohérente.
+
+    Appliquez les corrections directement dans le texte.
+    Indiquez chaque correction avec la balise [CORRECTION : ancienne version → nouvelle version].
   expected_output: >
-    L'article final prêt à être copié-collé sur le blog.
+    L'article final EN FRANÇAIS, prêt à copier-coller sur WordPress/Ghost,
+    au format Markdown, avec :
+    - Toutes les corrections appliquées
+    - Un résumé des corrections en fin de document sous le titre
+      "## Journal des corrections"
+    - La mention [PRÊT POUR PUBLICATION] en toute fin si aucun point bloquant
+      n'a été identifié
   agent: quality_reviewer
-  markdown: true
+  context:
+    - editing_task
   output_file: "articles/final_version_{timestamp}.md"
