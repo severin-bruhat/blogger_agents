@@ -2,7 +2,22 @@ research_task:
   description: >
     Effectuez des recherches approfondies et vérifiées sur le sujet suivant : {topic}.
 
-    Instructions précises :
+    INSTRUCTIONS DE VÉRIFICATION OBLIGATOIRES:
+    - Pour CHAQUE information clé, trouvez au moins 2 sources indépendantes confirmant
+      le fait avant de le considérer comme validé
+    - Créez un tableau de traçabilité dans votre recherche avec colonnes:
+      [Fait affirmé] | [Source 1 URL + date de consultation] | [Source 2 URL + date]
+      | [Niveau de confiance: Élevé/Moyen/Faible] | [Notes sur discrepances]
+    - Évaluez le niveau de confiance:
+      * Élevé: 2+ sources officielles récentes (<12 mois)
+      * Moyen: 1 source officielle + 1 source expatrié fiable OU 2 sources expatriés
+        récents
+      * Faible: 1 seule source OU sources contradictoires - DOIT être flaggé
+    - REJETEZ toute information de niveau faible sans confirmation supplémentaire
+    - Pour les faits de niveau moyen/faible, ajoutez une note explicative dans vos
+      recherches détaillant pourquoi vous les incluez malgré tout
+
+    INSTRUCTIONS DE SOURCES:
     - Cherchez des sources officielles en priorité : gov.uk, mygov.scot, NHS Écosse,
       HMRC, ambassade de France à Londres, consulat de France à Édimbourg.
     - Incluez également des blogs d'expatriés francophones reconnus et des forums
@@ -13,13 +28,23 @@ research_task:
       sur ce sujet.
     - Signalez toute information qui semble obsolète ou contradictoire entre les sources.
     - Rédigez TOUT en FRANÇAIS.
+
+    POINTS DE VÉRIFICATION FINAL:
+    - Avez-vous triangulé chaque fait principal?
+    - Avez-vous évalué la confiance pour chaque fait?
+    - Avez-vous identifié les faits à confiance faible?
   expected_output: >
-    Un compte-rendu de recherche structuré EN FRANÇAIS contenant :
-    1. Résumé exécutif (5-10 points clés)
-    2. Informations détaillées par sous-thème, chacune avec sa source URL
-    3. Les 5-8 questions fréquentes des francophones sur ce sujet
-    4. Conseils pratiques et pièges à éviter
-    5. Liste des sources avec URL complète et date de consultation
+    Un compte-rendu de recherche structuré EN FRANÇAIS contenant:
+    1. Résumé exécutif (5-10 points clés) AVEC niveau de confiance pour chaque point
+    2. Informations détaillées par sous-thème, chacune avec sa source URL et niveau
+       de confiance
+    3. Tableau de traçabilité complète des faits (voir format ci-dessus)
+    4. Les 5-8 questions fréquentes des francophones sur ce sujet
+    5. Conseils pratiques et pièges à éviter
+    6. Liste des sources avec URL complète, date de consultation et évaluation de
+       fiabilité
+    7. Section "Limites et incertitudes" listant les faits de confiance faible ou
+       moyenne
   agent: researcher
 
 planning_task:
@@ -60,11 +85,23 @@ writing_task:
     (2) le compte-rendu de recherche — toutes les informations factuelles et sources
         que vous citez DOIVENT provenir de ce document.
 
+    INSTRUCTIONS DE TRAÇABILITÉ OBLIGATOIRES:
+    - CHAQUE affirmation factuelle dans votre article doit être directement traçable
+      vers une entrée spécifique du tableau de traçabilité du chercheur
+    - Utilisez des citations inline discrètes sous la forme [Fait #X] où X correspond
+      à la ligne du tableau de traçabilité du chercheur
+    - En fin d'article, avant la section "Sources et liens utiles", ajoutez une section
+      "Traçabilité des faits" listant:
+      [Paragraphe ou section de l'article] → [Fait #X du chercheur] → [Niveau de confiance]
+    - N'utilisez AUCUN fait marqué comme "confiance faible" sans ajouter une indication
+      explicite d'incertitude dans votre texte (ex: "Les informations varient selon...",
+      "Il semble que...", "Selon les sources disponibles en [date]")
+    - Si un fait du chercheur est marqué comme contradictoire, présentez les différentes
+      versions avec leurs sources respectives
+
     Instructions précises :
     - Respectez strictement la structure H1/H2/H3 définie dans le plan.
     - N'inventez aucune information : utilisez exclusivement les faits du compte-rendu de recherche.
-    - Commencez par une accroche personnelle ou une anecdote (2-3 paragraphes)
-      avant d'entrer dans le vif du sujet.
     - Alternez paragraphes narratifs et éléments pratiques (listes, étapes numérotées).
     - Citez vos sources naturellement dans le texte ("Selon le site officiel gov.uk...")
       sans style académique lourd.
@@ -76,6 +113,7 @@ writing_task:
     Le brouillon complet de l'article EN FRANÇAIS au format Markdown, incluant :
     - Titre H1
     - Corps de l'article structuré selon le plan
+    - Section "Traçabilité des faits" entre l'article et "Sources et liens utiles"
     - Section "Sources et liens utiles" en fin d'article
     - Estimation du nombre de mots en fin de document
   agent: writer
@@ -114,26 +152,12 @@ seo_optimization_task:
 
 editing_task:
   description: >
-    Révisez l'article optimisé pour qu'il sonne authentiquement humain et corresponde
-    à la voix du blog : un·e expatrié·e français·e en Écosse, chaleureux·se, direct·e,
-    parfois autodérisoire.
-
-    Instructions précises :
-    - Traque et remplace toutes les tournures typiquement "IA" :
-      * Listes à puces orphelines sans intro narrative
-      * Transitions mécaniques ("En conclusion,", "Par ailleurs,", "Il convient de")
-      * Adjectifs pompeux et superlatifs vides
-      * Phrases trop longues et subordonnées imbriquées
-    - Renforce la personnalité de l'auteur :
-      * Ajoutez une touche d'humour là où c'est naturel
-      * Gardez quelques phrases courtes percutantes pour le rythme
-      * Assurez-vous que l'accroche est vraiment accrocheuse
-    - Vérifiez la cohérence du ton du début à la fin.
-    - Ne changez PAS le fond, les faits, ni les sources.
-    - Travaillez UNIQUEMENT en FRANÇAIS.
+    Réviser l'article produit par le rédacteur. 
+    Appliquez rigoureusement les règles de mon GUIDE DE STYLE (ton, vocabulaire, structure).
+    Assurez-vous que l'article ne ressemble pas à un texte généré par IA mais à un post 
+    chaleureux d'un expatrié français en Écosse.
   expected_output: >
-    L'article révisé EN FRANÇAIS au format Markdown, avec en commentaire Markdown
-    (<!-- -->) une note listant les 3-5 principaux changements stylistiques effectués.
+    L'article finalisé avec ma voix personnelle, en français impeccable.
   agent: editor
   context:
     - seo_optimization_task
@@ -141,6 +165,15 @@ editing_task:
 quality_review_task:
   description: >
     Effectuez la vérification finale de l'article avant publication.
+
+    MÉTHODE DE VÉRIFICATION SYSTÉMATIQUE:
+    1. Vérification croisée: Comparez chaque affirmation factuelle avec les notes de
+       recherche du chercheur pour confirmer la traçabilité
+    2. Source verification checklist: Pour chaque source majeure, vérifiez que l'URL
+       est accessible et que la date de consultation est inférieure à 12 mois
+    3. Confiance triangulaire: Croisez les affirmations avec les niveaux de confiance
+       fournis par le chercheur - traiter les niveaux Moyen/Faible avec une attention
+       accrue
 
     Trois axes de contrôle obligatoires :
 
@@ -159,6 +192,11 @@ quality_review_task:
        - Typographie française : guillemets «», espaces insécables (: ; ! ?),
          majuscules accentuées (É, À, Ê).
        - Ponctuation cohérente.
+
+    4. STRUCTURE DE L'ARTICLE
+       - Vérifiez que la section "Traçabilité des faits" est présente entre l'article
+         principal et "Sources et liens utiles". Si elle est absente, ajoutez-la avec
+         une note: [TRACÉBITÉ AJOUTÉE PAR RAPPEL]
 
     Appliquez les corrections directement dans le texte.
     Indiquez chaque correction avec la balise [CORRECTION : ancienne version → nouvelle version].

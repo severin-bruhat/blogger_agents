@@ -21,11 +21,11 @@ class BloggerAgents():
     
     @agent
     def researcher(self) -> Agent:
-        return Agent(config=self.agents_config['researcher'], llm=fast_llm, tools=[SerperDevTool()], verbose=True)
+        return Agent(config=self.agents_config['researcher'], llm=smart_llm, tools=[SerperDevTool()], verbose=True)
 
     @agent
     def planner(self) -> Agent:
-        return Agent(config=self.agents_config['planner'], llm=fast_llm, verbose=True)
+        return Agent(config=self.agents_config['planner'], llm=smart_llm, verbose=True)
 
     @agent
     def seo_optimizer(self) -> Agent:
@@ -69,6 +69,35 @@ class BloggerAgents():
         return Task(config=self.tasks_config['editing_task'])
 
     @task
+    def verification_task(self) -> Task:
+        return Task(
+            description='''
+                Effectuez une vérification croisée rapide des découvertes du chercheur
+                avant de poursuivre avec la planification.
+
+                Vérifications à effectuer:
+                1. Confirmez que tous les faits de confiance élevée ont au moins 2 sources
+                2. Identifiez les faits marqués comme faibles ou contradictoires
+                3. Vérifiez la cohérence interne: pas de contradictions entre différentes parties
+                4. Assurez-vous que les 5-8 questions fréquentes sont bien documentées
+
+                Sortie: Un bref rapport de validation signalant:
+                - Faits validés ✅
+                - Faits nécessitant attention ⚠️
+                - Recommandation: poursuivre avec planification OU demander recherche complémentaire
+            ''',
+            expected_output='''
+                Rapport de vérification EN FRANÇAIS contenant:
+                1. Statistiques: nombre total de faits, répartition par niveau de confiance
+                2. Liste des points nécessitant clarification (avec suggestions de sources)
+                3. Recommandation claire: [PROCEED TO PLANNING] ou [RETURN TO RESEARCHER WITH SPECIFIC NOTES]
+                4. Tous les éléments en français
+            ''',
+            agent=self.quality_reviewer(),
+            context=[self.research_task()]
+        )
+
+    @task
     def quality_review_task(self) -> Task:
         return Task(config=self.tasks_config['quality_review_task'])
 
@@ -76,7 +105,15 @@ class BloggerAgents():
     def crew(self) -> Crew:
         return Crew(
             agents=self.agents,
-            tasks=self.tasks,
+            tasks=[
+                self.research_task(),
+                self.verification_task(),
+                self.planning_task(),
+                self.writing_task(),
+                self.seo_optimization_task(),
+                self.editing_task(),
+                self.quality_review_task()
+            ],
             process=Process.sequential,
             verbose=True
         )
