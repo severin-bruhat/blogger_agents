@@ -3,6 +3,7 @@ from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from typing import List
 from crewai_tools import SerperDevTool
+import re
 
 smart_llm = LLM(model="gpt-4o")
 fast_llm = LLM(model="gpt-4o-mini")
@@ -10,6 +11,71 @@ fast_llm = LLM(model="gpt-4o-mini")
 # Load the personal writing style guide to inject into relevant agents
 with open("knowledge/style_guide.md", "r", encoding="utf-8") as f:
     personal_style_guide = f.read()
+
+
+def extract_keywords_from_prompt(prompt: str) -> str:
+    """
+    Extract a keyword from a full sentence prompt for SEO optimization.
+    Uses simple heuristics: finds the most relevant noun phrase or multi-word term.
+
+    Args:
+        prompt: Full sentence prompt (e.g., "Rédigez un article sur comment trouver
+                un logement à Édimbourg quand on arrive...")
+
+    Returns:
+        A keyword string suitable for SEO (e.g., "logement Édimbourg")
+    """
+    # Remove common French starting phrases
+    patterns_to_remove = [
+        r'^Rédigez un article sur\s+',
+        r'^Écrivez un article sur\s+',
+        r'^Article sur\s+',
+        r'^Écrivez sur\s+',
+        r'^Rédigez sur\s+',
+        r'^Écrivez une informations sur\s+',
+        r'^Article à propos de\s+',
+    ]
+
+    cleaned = prompt
+    for pattern in patterns_to_remove:
+        cleaned = re.sub(pattern, '', cleaned, flags=re.IGNORECASE)
+
+    # Remove parentheses and their contents (optional details)
+    cleaned = re.sub(r'\([^)]*\)', '', cleaned)
+
+    # Extract key phrases - look for prepositional phrases with important nouns
+    # Key words for French expat blog SEO
+    key_nouns = [
+        r'\blogement\b', r'\bappartement\b', r'\bvisa\b', r'\bnationalité\b',
+        r'\btravail\b', r'\bsalaire\b', r'\bcost of living\b', r'\bcout de la vie\b',
+        r'\bÉdimbourg\b', r'\bEdimbourg\b', r'\bÉcosse\b', r'\bScotland\b',
+        r'\bNHS\b', r'\bsettled status\b', r'\bpermis\b', r'\bconduire\b',
+        r'\bfiscalité\b', r'\btax\b', r'\bcompte bancaire\b', r'\bbank account\b',
+        r'\bécole\b', r'\bélèves\b', r'\bfamille\b', r'\bexpatrié\b', r'\bexpatriation\b'
+    ]
+
+    # Find matching key phrases
+    found_keywords = []
+    for noun_pattern in key_nouns:
+        matches = re.findall(noun_pattern, cleaned, flags=re.IGNORECASE)
+        if matches:
+            found_keywords.extend(matches)
+
+    if found_keywords:
+        # Return the first found keyword, cleaned up
+        return ' '.join(found_keywords[:3]).strip()
+
+    # Fallback: extract first 2-3 significant words
+    words = re.findall(r'\b[A-Z][a-zA-Zàéèùîïüâêôöë]\w*\b', cleaned)
+    if words:
+        return ' '.join(words[:3])
+
+    # Ultimate fallback: first 3 non-stop words
+    stop_words = {'à', 'au', 'aux', 'de', 'des', 'du', 'en', 'et', 'le', 'la',
+                  'les', 'un', 'une', 'ou', 'où', 'ce', 'ces', 'pour', 'avec'}
+    words = [w for w in cleaned.split() if w.lower() not in stop_words]
+    return ' '.join(words[:3])[:50]  # Limit to 50 chars
+
 
 @CrewBase
 class BloggerAgents():

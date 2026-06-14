@@ -1,6 +1,6 @@
 research_task:
   description: >
-    Effectuez des recherches approfondies et vérifiées sur le sujet suivant : {topic}.
+    Effectuez des recherches approfondies et vérifiées sur le sujet suivant : {prompt}.
 
     INSTRUCTIONS DE VÉRIFICATION OBLIGATOIRES:
     - Pour CHAQUE information clé, trouvez au moins 2 sources indépendantes confirmant
@@ -24,15 +24,18 @@ research_task:
       actifs (The French Group Edinburgh, Français en Écosse, etc.).
     - Pour chaque information clé, notez l'URL source complète et la date de dernière
       mise à jour si disponible.
-    - Identifiez les 5 à 8 questions que se posent le plus souvent les francophones
-      sur ce sujet.
-    - Signalez toute information qui semble obsolète ou contradictoire entre les sources.
-    - Rédigez TOUT en FRANÇAIS.
+
+    DIRECTIVES POUR PROMPTS DÉTAILLÉS:
+    - Si le prompt contient des questions spécifiques ou des points à couvrir (ex: "incluez X, Y, Z"),
+      priorisez-y répondre dans vos recherches
+    - Identifiez explicitement les 5-8 questions que le prompt suggère que le lecteur se pose
+    - Organisez vos recherches par thématique pour correspondre aux demandes du prompt
 
     POINTS DE VÉRIFICATION FINAL:
     - Avez-vous triangulé chaque fait principal?
     - Avez-vous évalué la confiance pour chaque fait?
     - Avez-vous identifié les faits à confiance faible?
+    - Avez-vous couvert tous les points spécifiques mentionnés dans le prompt?
   expected_output: >
     Un compte-rendu de recherche structuré EN FRANÇAIS contenant:
     1. Résumé exécutif (5-10 points clés) AVEC niveau de confiance pour chaque point
@@ -49,18 +52,28 @@ research_task:
 
 planning_task:
   description: >
-    Sur la base du compte-rendu de recherche fourni, créez un plan d'article de blog
-    détaillé sur {topic}.
+    Sur la base du compte-rendu de recherche fourni et du prompt initial : {prompt},
+    créez un plan d'article de blog détaillé.
 
     L'article doit avoir l'angle d'un blog personnel francophone : utile, humain,
     imparfait — pas une brochure administrative.
+
+    DIRECTIVES POUR PROMPTS DÉTAILLÉS:
+    - Si le prompt contient des demandes spécifiques (ex: "incluez: X, Y, Z"),
+      intégrez-les EXPLICITEMENT dans votre plan avec des sections H2/H3 dédiées
+    - Identifiez le mot-clé SEO principal automatiquement à partir du prompt
+      (ex: "logement Édimbourg", "visa UK", "NHS Écosse")
+    - Structurez en 4 à 6 sections H2 maximum, chacune avec 2-3 sous-sections H3
+      si nécessaire.
+    - Chaque section H2 doit répondre à une des questions fréquentes identifiées
+      par le chercheur ou à une demande explicite du prompt.
 
     Instructions précises :
     - Proposez un titre principal H1 accrocheur (pas un titre d'encyclopédie).
     - Structurez en 4 à 6 sections H2 maximum, chacune avec 2-3 sous-sections H3
       si nécessaire.
     - Chaque section H2 doit répondre à une des questions fréquentes identifiées
-      par le chercheur.
+      par le chercheur ou à une demande explicite du prompt.
     - Prévoyez un emplacement pour au moins une anecdote personnelle ou expérience vécue.
     - La conclusion doit inclure un appel à l'action ou une invitation au commentaire.
     - Rédigez TOUT en FRANÇAIS.
@@ -70,13 +83,14 @@ planning_task:
     - Pour chaque H2 : titre + 2-3 phrases décrivant le contenu attendu + indication
       si une anecdote/astuce pratique est suggérée
     - Note éditoriale sur le ton à adopter pour cet article spécifiquement
+    - Mot-clé SEO identifié à partir du prompt
   agent: planner
   context:
     - research_task
 
 writing_task:
   description: >
-    Rédigez l'article complet EN FRANÇAIS d'environ {word_count} mots sur {topic}.
+    Rédigez l'article complet EN FRANÇAIS d'environ {word_count} mots sur {prompt}.
 
     POINT DE DÉPART OBLIGATOIRE :
     Avant d'écrire la moindre phrase, lisez intégralement :
@@ -125,10 +139,12 @@ seo_optimization_task:
   description: >
     Optimisez le brouillon de l'article pour le référencement naturel.
 
-    Mot-clé principal : "{keyword}"
-    Sujet : {topic}
+    Mot-clé principal : {keyword}
+    Sujet : {prompt}
 
-    Instructions précises :
+    DIRECTIVES POUR EXTRACTION DE MOTS-CLÉS:
+    - Si {keyword} est vide ou non fourni, extraitez le mot-clé principal à partir du prompt
+      en identifiant le thème central et les lieux/objets importants
     - Analysez la densité du mot-clé principal et de ses variantes sémantiques.
       Objectif : présence naturelle dans le titre, le premier paragraphe, 2-3 H2
       et la conclusion — sans bourrage.
