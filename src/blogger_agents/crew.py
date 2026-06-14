@@ -4,9 +4,28 @@ from crewai.agents.agent_builder.base_agent import BaseAgent
 from typing import List
 from crewai_tools import SerperDevTool
 import re
+import os
 
-smart_llm = LLM(model="gpt-4o")
-fast_llm = LLM(model="gpt-4o-mini")
+# OpenRouter support
+openrouter_api_key = os.getenv("OPENROUTER_API_KEY", os.getenv("OPENAI_API_KEY"))
+openrouter_base_url = os.getenv("OPENAI_API_BASE_URL", None)
+
+if openrouter_base_url:
+    # Use OpenRouter or custom endpoint
+    smart_llm = LLM(
+        model=os.getenv("MODEL", "gpt-4o"),
+        base_url=openrouter_base_url,
+        api_key=openrouter_api_key
+    )
+    fast_llm = LLM(
+        model=os.getenv("FAST_MODEL", os.getenv("MODEL", "gpt-4o-mini")),
+        base_url=openrouter_base_url,
+        api_key=openrouter_api_key
+    )
+else:
+    # Default OpenAI
+    smart_llm = LLM(model="gpt-4o")
+    fast_llm = LLM(model="gpt-4o-mini")
 
 # Load the personal writing style guide to inject into relevant agents
 with open("knowledge/style_guide.md", "r", encoding="utf-8") as f:

@@ -53,36 +53,31 @@ research_task:
 planning_task:
   description: >
     Sur la base du compte-rendu de recherche fourni et du prompt initial : {prompt},
-    créez un plan d'article de blog détaillé.
+    créez un plan d'article de blog simple et direct.
 
-    L'article doit avoir l'angle d'un blog personnel francophone : utile, humain,
-    imparfait — pas une brochure administrative.
+    STRUCTURE OBLIGATOIRE:
+    - Maximum 2 sections H2 (pas plus)
+    - PAS de sections H3
+    - Structurez simplement: introduction → développement (1-2 H2) → conclusion
 
-    DIRECTIVES POUR PROMPTS DÉTAILLÉS:
-    - Si le prompt contient des demandes spécifiques (ex: "incluez: X, Y, Z"),
-      intégrez-les EXPLICITEMENT dans votre plan avec des sections H2/H3 dédiées
+    DIRECTIVES:
+    - Si le prompt contient des demandes spécifiques, intégrez-les naturellement
+      dans les H2 sans créer de sous-sections
     - Identifiez le mot-clé SEO principal automatiquement à partir du prompt
-      (ex: "logement Édimbourg", "visa UK", "NHS Écosse")
-    - Structurez en 4 à 6 sections H2 maximum, chacune avec 2-3 sous-sections H3
-      si nécessaire.
-    - Chaque section H2 doit répondre à une des questions fréquentes identifiées
-      par le chercheur ou à une demande explicite du prompt.
+    - Évitez de créer des sections pour chaque point du prompt - fusionnez-les
+    - Ne prévoyez PAS d'emplacement pour anecdotes personnelles spécifiques
 
     Instructions précises :
-    - Proposez un titre principal H1 accrocheur (pas un titre d'encyclopédie).
-    - Structurez en 4 à 6 sections H2 maximum, chacune avec 2-3 sous-sections H3
-      si nécessaire.
-    - Chaque section H2 doit répondre à une des questions fréquentes identifiées
-      par le chercheur ou à une demande explicite du prompt.
-    - Prévoyez un emplacement pour au moins une anecdote personnelle ou expérience vécue.
+    - Proposez un titre principal H1 accrocheur
+    - Maximum 2 sections H2 maximum (pas de H3)
+    - Chaque H2 couvre plusieurs aspects du sujet de façon naturelle
     - La conclusion doit inclure un appel à l'action ou une invitation au commentaire.
     - Rédigez TOUT en FRANÇAIS.
   expected_output: >
     Un plan d'article EN FRANÇAIS comprenant :
     - H1 proposé (avec variante alternative)
-    - Pour chaque H2 : titre + 2-3 phrases décrivant le contenu attendu + indication
-      si une anecdote/astuce pratique est suggérée
-    - Note éditoriale sur le ton à adopter pour cet article spécifiquement
+    - Maximum 2 sections H2 avec leur contenu attendu (pas de H3)
+    - Note éditoriale sur le ton à adopter (général, pas d'anecdotes spécifiques)
     - Mot-clé SEO identifié à partir du prompt
   agent: planner
   context:
@@ -94,10 +89,15 @@ writing_task:
 
     POINT DE DÉPART OBLIGATOIRE :
     Avant d'écrire la moindre phrase, lisez intégralement :
-    (1) le plan produit par le Stratège Éditorial — utilisez son H1, ses H2 et ses H3
-        comme squelette exact de l'article. Ne réorganisez pas, ne renommez pas les sections.
+    (1) le plan produit par le Stratège Éditorial — utilisez son H1 et ses H2
+        comme squelette de l'article. Ne réorganisez pas, ne renommez pas les sections.
     (2) le compte-rendu de recherche — toutes les informations factuelles et sources
         que vous citez DOIVENT provenir de ce document.
+
+    STRUCTURE OBLIGATOIRE:
+    - PAS de sections H3 - seulement H1 et H2
+    - Si le plan contient des H3, fusionnez-les naturellement dans les H2
+    - Utilisez des paragraphes simples pour organiser le contenu sous chaque H2
 
     INSTRUCTIONS DE TRAÇABILITÉ OBLIGATOIRES:
     - CHAQUE affirmation factuelle dans votre article doit être directement traçable
@@ -114,7 +114,7 @@ writing_task:
       versions avec leurs sources respectives
 
     Instructions précises :
-    - Respectez strictement la structure H1/H2/H3 définie dans le plan.
+    - Respectez strictement la structure H1/H2 définie dans le plan (pas de H3).
     - N'inventez aucune information : utilisez exclusivement les faits du compte-rendu de recherche.
     - Alternez paragraphes narratifs et éléments pratiques (listes, étapes numérotées).
     - Citez vos sources naturellement dans le texte ("Selon le site officiel gov.uk...")
@@ -126,7 +126,7 @@ writing_task:
   expected_output: >
     Le brouillon complet de l'article EN FRANÇAIS au format Markdown, incluant :
     - Titre H1
-    - Corps de l'article structuré selon le plan
+    - Corps de l'article structuré selon le plan (H2 maximum, PAS de H3)
     - Section "Traçabilité des faits" entre l'article et "Sources et liens utiles"
     - Section "Sources et liens utiles" en fin d'article
     - Estimation du nombre de mots en fin de document
@@ -153,11 +153,16 @@ seo_optimization_task:
       le mot-clé et un verbe d'action.
     - Suggérez 5 mots-clés secondaires / longue traîne à intégrer naturellement.
     - Identifiez les H2/H3 qui pourraient bénéficier d'une reformulation SEO.
-    - Proposez le texte modifié intégrant vos optimisations.
+
+    PLACEMENT DES MÉTADONNÉES:
+    - Ajoutez les métadonnées SEO à la FIN de l'article, pas au début
+    - Titre de la section: "SEO" ou "Métadonnées SEO"
+    - Placez cette section après la conclusion et avant la section "Sources et liens utiles"
+
     - Tout le contenu reste EN FRANÇAIS, naturel et lisible.
   expected_output: >
-    Version optimisée de l'article EN FRANÇAIS au format Markdown, avec en tête
-    de document une section "Métadonnées SEO" contenant :
+    Version optimisée de l'article EN FRANÇAIS au format Markdown, avec les
+    métadonnées SEO à la fin de l'article (pas au début):
     - Titre SEO proposé
     - Méta-description (150-160 caractères)
     - Mots-clés secondaires retenus
@@ -213,6 +218,15 @@ quality_review_task:
        - Vérifiez que la section "Traçabilité des faits" est présente entre l'article
          principal et "Sources et liens utiles". Si elle est absente, ajoutez-la avec
          une note: [TRACÉBITÉ AJOUTÉE PAR RAPPEL]
+       - Vérifiez que la section SEO (mots-clés et description) est présente à la fin
+         de l'article, après la conclusion. Si elle est absente ou en haut, déplacez-la.
+
+    5. ANECDOTES PERSONNELLES
+       - IDENTIFIEZ toute anecdote personnelle ou expérience vécue spécifique
+       - Si l'anecdote semble inventée (pas sourcée, trop précise comme "j'ai trouvé...",
+         "mon ami Thomas m'a dit..."), marquez-la [ANECDOTE À VÉRIFIER] ou suggérez
+         une reformulation générique ("On peut trouver...", "Beaucoup trouvent...")
+       - Vérifiez que la structure n'a pas trop de sections (max 2 H2)
 
     Appliquez les corrections directement dans le texte.
     Indiquez chaque correction avec la balise [CORRECTION : ancienne version → nouvelle version].
