@@ -173,12 +173,33 @@ seo_optimization_task:
 
 editing_task:
   description: >
-    Réviser l'article produit par le rédacteur. 
+    Réviser l'article produit par le rédacteur.
     Appliquez rigoureusement les règles de mon GUIDE DE STYLE (ton, vocabulaire, structure).
-    Assurez-vous que l'article ne ressemble pas à un texte généré par IA mais à un post 
+    Assurez-vous que l'article ne ressemble pas à un texte généré par IA mais à un post
     chaleureux d'un expatrié français en Écosse.
+
+    INSTRUCTION IMPORTANTE SUR LES MÉTADONNÉES SEO:
+    L'article reçu en entrée contient une section "SEO" ou "Métadonnées SEO" ajoutée
+    par l'optimiseur SEO. Cette section contient:
+    - Le titre SEO proposé
+    - La méta-description (150-160 caractères)
+    - Les mots-clés secondaires
+    - Les modifications apportées
+
+    VOUS DEVEZ:
+    - Conserver cette section À LA FIN de l'article, après la conclusion et AVANT
+      la section "Sources et liens utiles"
+    - NE PAS modifier le contenu de la section SEO (seul l'auteur SEO peut le faire)
+    - Vérifier que la section est bien présente et à la bonne position
   expected_output: >
     L'article finalisé avec ma voix personnelle, en français impeccable.
+    Le format doit inclure à la fin:
+    1. L'article principal (ton persone, chaleureux)
+    2. Section "Traçabilité des faits"
+    3. Section "Sources et liens utiles"
+    4. Section "SEO" (métadonnées non modifiées)
+    5. Section "Journal des corrections"
+    6. Mention [PRÊT POUR PUBLICATION]
   agent: editor
   context:
     - seo_optimization_task
@@ -218,10 +239,15 @@ quality_review_task:
        - Vérifiez que la section "Traçabilité des faits" est présente entre l'article
          principal et "Sources et liens utiles". Si elle est absente, ajoutez-la avec
          une note: [TRACÉBITÉ AJOUTÉE PAR RAPPEL]
-       - Vérifiez que la section SEO (mots-clés et description) est présente à la fin
-         de l'article, après la conclusion. Si elle est absente ou en haut, déplacez-la.
+       - Vérifiez que la section SEO est présente à la fin de l'article (après "Sources
+         et liens utiles"). Si elle est absente, ajoutez-la avec: [SEO AJOUTÉE PAR RAPPEL]
+       - Vérifiez que la section SEO contient:
+         * Titre SEO (H2 ou bold)
+         * Méta-description (150-160 caractères)
+         * Mots-clés secondaires
+         * Notes sur les modifications
 
-    5. ANECDOTES PERSONNELLES
+    6. ANECDOTES PERSONNELLES
        - IDENTIFIEZ toute anecdote personnelle ou expérience vécue spécifique
        - Si l'anecdote semble inventée (pas sourcée, trop précise comme "j'ai trouvé...",
          "mon ami Thomas m'a dit..."), marquez-la [ANECDOTE À VÉRIFIER] ou suggérez
@@ -230,6 +256,11 @@ quality_review_task:
 
     Appliquez les corrections directement dans le texte.
     Indiquez chaque correction avec la balise [CORRECTION : ancienne version → nouvelle version].
+
+    INSTRUCTION IMPORTANTE SUR LE FORMAT DE SORTIE:
+    Votre réponse DOIT être uniquement le contenu markdown de l'article.
+    N'ENVELOPPEZ JAMAIS votre réponse dans des blocs de code markdown (```markdown ou ```).
+    Le fichier final doit être directement utilisable sans avoir besoin de supprimer des délimiteurs de code.
   expected_output: >
     L'article final EN FRANÇAIS, prêt à copier-coller sur WordPress/Ghost,
     au format Markdown, avec :
@@ -238,6 +269,7 @@ quality_review_task:
       "## Journal des corrections"
     - La mention [PRÊT POUR PUBLICATION] en toute fin si aucun point bloquant
       n'a été identifié
+    - PAS de blocs de code markdown autour du contenu
   agent: quality_reviewer
   context:
     - editing_task
