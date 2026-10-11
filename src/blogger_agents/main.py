@@ -15,15 +15,14 @@ def run():
 
     # Full sentence prompt for detailed article instructions
     prompt = (
-        "Rédigez un article sur comment trouver un logement à Édimbourg quand on arrive. "
-        "Incluez: les sites web à utiliser (Target, Letgo, Flatmates), "
-        "les zones recommandées (Leith, Newhaven, etc.), les zones à éviter (certains quartiers), "
-        "le budget attendu (500-800£ par mois), et les pièges à éviter."
+        "Rédigez un article pour de bons plans pour visiter Edimbourg à pied en mode nature. "
+        "Inclure: Calton Hill, Arthur seat (et les autres colines), water of leith walk, the shore, the Botanic Garde,"
+        "et autres endroits naturels en centre ville (ou proche)."
     )
 
     # Auto-extract keyword if not provided
     keyword = extract_keywords_from_prompt(prompt)
-    word_count = 1500
+    word_count = 2000
 
     inputs = {
         'prompt': prompt,
